@@ -1,4 +1,5 @@
 
+import useFetch from "../hooks/useFetch"
 import IssueItem from "../components/IssueItem"
 
 export default function ViewTitle(){
