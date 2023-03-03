@@ -1,9 +1,16 @@
 
-import useFetch from "../hooks/useFetch"
-import IssueItem from "../components/IssueItem"
+import useFetch from '../hooks/useFetch';
+import IssueItem from '../components/viewtitle/IssueItem';
+import { useLocation } from 'react-router-dom';
 
 export default function ViewTitle(){
-    const {data, isLoading, error} = useFetch(`https://metron.cloud/api/series/${comic.id}/issue_list/?format=json`, {}, [])
+    
+    const location = useLocation();
+    const { from } = location.state;
+
+    console.log(from);
+
+    const {data, isLoading, error} = useFetch(`https://metron.cloud/api/series/${from.id}/issue_list/?format=json`, {}, [])
 
     return(
         <div>

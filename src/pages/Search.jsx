@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useFetch from '../hooks/useFetch';
-import SearchForm from '../components/SearchForm';
-import TitleEntry from '../components/TitleEntry';
+import SearchForm from '../components/search/SearchForm';
+import TitleEntry from '../components/search/TitleEntry';
 
 export default function Search(){
     const [searchQuery, setSearchQuery] = useState(null);

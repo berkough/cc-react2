@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Comic from '../components/Comic';
+import Comic from '../components/collection/Comic';
 
 export default function Collection(){
     const [issueList,setIssueList] = useState();
