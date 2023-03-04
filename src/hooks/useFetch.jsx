@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
-export default function useFetch(url=null, options, deps=[]){
+export default function useFetch(url){
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(null);
     const [error, setError] = useState(null);
 
-    useEffect(()=>{
+    function fetch(){
         setLoading(true);
         setData(null);
         setError(null);
@@ -14,8 +14,9 @@ export default function useFetch(url=null, options, deps=[]){
         axios.get(url, {signal: controller.signal})
             .then(res => {
                 setLoading(false);
-                console.log(res);
-                res.data.results && setData(res.data.results);
+                console.log('This is useFetch');
+                console.log(res.data);
+                res.data.results && setData(res.data);
             })
             .catch(error => {
                 if(error.response){
@@ -32,11 +33,13 @@ export default function useFetch(url=null, options, deps=[]){
                     console.log('Error ', error.message);
                     setError(`Error Mesage: ${error.message}`);
                 }
+            }).finally(()=>{
+                setLoading(false);
             })
             return () => {
                 controller.abort();
             }
-    }, deps)
+    }
 
-    return {data, loading, error}
+    return {data, loading, error, fetch}
 }

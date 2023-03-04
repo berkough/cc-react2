@@ -1,40 +1,27 @@
-import { useState } from 'react';
-import { Spinner, Container, Button } from 'react-bootstrap'
+import { Container, Row, Button } from 'react-bootstrap';
 import useFetch from '../hooks/useFetch';
-import NewIssue from '../components/main/NewIssue';
+import NewIssue from '../components/global/NewIssue';
 
 export default function Main(){
-    const [mainComics,setMainComics] = useState(null);
-    const [getNew, setGetNew] = useState(false);
-    
     var date = new Date();
-    console.log(date.getMonth()+1);
-    console.log(date.getFullYear());
-    const {data, isLoading, error} = useFetch(`https://metron.cloud/api/issue/?format=json&cover_month=${date.getMonth()+1}&cover_year=${date.getFullYear()}`, {}, [getNew]);
-    console.log(error);
 
-    const handleSubmit = () => {
-        console.log('Submitting');
-        if (!getNew){
-            setGetNew(true);
-        } else {
-            setGetNew(false);
-        }
-    }
+    const {data, loading, error, fetch} = useFetch(`https://metron.cloud/api/issue/?format=json&cover_month=${date.getMonth()+1}&cover_year=${date.getFullYear()}`);
+
+    if(loading) return <h1>Loading...</h1>
+    if(error) console.log(error)
 
     return(
         <Container>
-            <Button onClick={handleSubmit}>Get New Comics</Button>
-            { isLoading &&
-                <Spinner animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                </Spinner>
-            }
-            {   setMainComics(data) &&
-                mainComics.map((comic)=>{
-                    return <NewIssue comic={comic}/>
+        <Row><Button onClick={fetch}>Get New Comics</Button></Row>
+        <Row>
+        <div className='d-inline-flex flex-wrap justify-content-center'>
+            {
+                data && data.results.slice(0,5).map((comic, i)=>{
+                    return <NewIssue comic={comic} key={i} />
                 })
             }
+        </div>
+        </Row>
         </Container>
     )
 }

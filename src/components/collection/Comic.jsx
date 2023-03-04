@@ -1,6 +1,8 @@
 import Card from 'react-bootstrap/Card';
 
 export default function Comic({comic}){
+console.log('This is the Comic Component.');
+console.log(comic);
     return(
         <Card style={{width: '18rem'}} id={comic.id}>
             <Card.Img variant='top' src={comic.image} />

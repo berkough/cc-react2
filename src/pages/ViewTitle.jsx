@@ -1,7 +1,8 @@
 
 import useFetch from '../hooks/useFetch';
-import IssueItem from '../components/viewtitle/IssueItem';
+import NewIssue from '../components/global/NewIssue';
 import { useLocation } from 'react-router-dom';
+import useRunOnce from '../hooks/useRunOnce';
 
 export default function ViewTitle(){
     
@@ -10,13 +11,19 @@ export default function ViewTitle(){
 
     console.log(from);
 
-    const {data, isLoading, error} = useFetch(`https://metron.cloud/api/series/${from.id}/issue_list/?format=json`, {}, [])
+    const {data, loading, error, fetch} = useFetch(`https://metron.cloud/api/series/${from.id}/issue_list/?format=json`);
+
+    useRunOnce({
+        fn: ()=>{
+            fetch();
+        }
+    });
 
     return(
         <div>
             {
-                data && data.map((comic)=>{
-                    return <IssueItem comic={comic} />
+                data && data.results.map((comic, i)=>{
+                    return <NewIssue comic={comic} key={i} />
                 })
             }
         </div>
