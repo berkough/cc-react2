@@ -5,7 +5,7 @@ import TitleEntry from '../components/search/TitleEntry';
 
 export default function Search(){
     const [searchQuery, setSearchQuery] = useState(null);
-    const {data, isLoading, error} = useFetch(`https://metron.cloud/api/series/?format=json&name=${searchQuery}`, {}, [])
+    const {data, isLoading, error} = useFetch(`https://metron.cloud/api/series/?format=json&name=${searchQuery}`)
 
     return(
         <>

@@ -7,7 +7,7 @@ export default function SearchForm({setData}){
     
     const handleSubmit = () => {
         console.log('Submitting');
-        if (searchText.length == 0){
+        if (searchText.length === 0){
             console.log('Error');
             return false;
         } else {
